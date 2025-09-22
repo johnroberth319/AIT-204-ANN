@@ -190,6 +190,32 @@ def find_optimal_team(csv_file="relevant_data.csv", model=None, optional_max_tea
 # ==========================================
 st.title("🏀 Optimal Basketball Team Finder")
 
+st.markdown("""
+                # GitHub Repository
+                [Link to GitHub Repository](https://github.com/nolanrd04/CST-435-Assignment2-ANNv1.1)
+                I wasn't sure if you wanted the whole thing submitted in a zip file, or just the streamlit link.
+                # AI usage
+                Claude AI helped a lot in generating code to calculate team scores and features. It did not include everything,
+                So I spent a while going through and adjusting weights, fixing bugs, and adding comments. I do not know a lot
+                about basketball, so having claude help seemed reasonable. Additionally, The output seems to actually make sense.
+                Both ChatGPT and Claude were used in helping to create the pipeline and clean things up.
+
+                # Project explanation
+
+                ### This project uses basketball player data to build the most optimal team of 5 players using a neural network.
+                ### Here are the steps involved:
+                1. **Data Cleaning**: The raw player data is cleaned and filtered to keep relevant statistics. Only 100 players are picked.
+                2. **Team Feature Generation**: Random teams are generated and their features are calculated. Picked from the 100 players.
+                3. **Rules established**: There are rules made in order to determine what makes a good team.
+                There are three categories that each have their own weights, and they are comprised of individual
+                features that also have their own weights. The weights of the featres were determined by my general
+                knowledge of basketball and trial and error. The weights of the categories were determined by trial
+                and error.
+                4. **Neural Network Training**: A neural network is built and trained to predict team quality scores based on the generated features.
+                The neural network learns from the different combinations of teams and their scores.
+                5. **Optimal Team Search**: The trained model is used to evaluate many possible 5-player combinations to find the best team, given the 100 players.
+                """)
+
 MODEL_PATH = "basketball_team_model.keras"
 nn = NeuralNetwork(input_dim=21)
 
