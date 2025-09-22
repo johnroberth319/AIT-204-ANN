@@ -16,18 +16,40 @@ import math
 class NeuralNetwork:
     def __init__(self, input_dim: int):
         self.input_dim = input_dim
-        self.scaler = StandardScaler()
         self.model = None
+        self.scaler = None  # add scaler for consistent preprocessing
 
-    def load_model(self, path="basketball_team_model.keras"):
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"❌ Model file not found: {path}")
-        self.model = keras.models.load_model(path)
+    def load_model(self, model_path="basketball_team_model.keras", scaler_path="feature_scaler.pkl"):
+        """Load trained model and scaler."""
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"❌ Model file not found: {model_path}")
+        if not os.path.exists(scaler_path):
+            raise FileNotFoundError(f"❌ Scaler file not found: {scaler_path}")
+        
+        # Load model
+        self.model = keras.models.load_model(model_path)
+
+        # Load scaler
+        with open(scaler_path, "rb") as f:
+            self.scaler = pickle.load(f)
+
+        print(f"✅ Model loaded from {model_path}")
+        print(f"✅ Scaler loaded from {scaler_path}")
 
     def predict_team_score(self, features: List[float]) -> float:
+        """Predict team score given feature vector."""
+        if self.model is None or self.scaler is None:
+            raise ValueError("❌ Model or scaler not loaded. Call load_model() first.")
+
+        # Ensure correct shape
         features = np.array(features).reshape(1, -1)
+
+        # Scale features like during training
         features_scaled = self.scaler.transform(features)
-        return float(self.model.predict(features, verbose=0)[0][0])
+
+        # Predict
+        prediction = self.model.predict(features_scaled, verbose=0)[0][0]
+        return float(prediction)
 
 # ==========================================
 # Basketball Team Evaluator
