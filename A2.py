@@ -162,7 +162,7 @@ def find_optimal_team(csv_file="relevant_data.csv", model=None, optional_max_tea
 # ==========================================
 # Streamlit UI
 # ==========================================
-st.title("🏀 Optimal Basketball Team Finder (Hybrid Evaluation)")
+st.title("🏀 Optimal Basketball Team Finder")
 
 MODEL_PATH = "basketball_team_model.keras"
 nn = NeuralNetwork(input_dim=21)
