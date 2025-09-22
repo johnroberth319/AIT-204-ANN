@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from itertools import combinations
+from sklearn.preprocessing import StandardScaler
 from typing import List, Dict
 from tensorflow import keras
 import math
@@ -15,6 +16,7 @@ import math
 class NeuralNetwork:
     def __init__(self, input_dim: int):
         self.input_dim = input_dim
+        self.scaler = StandardScaler()
         self.model = None
 
     def load_model(self, path="basketball_team_model.keras"):
@@ -24,6 +26,7 @@ class NeuralNetwork:
 
     def predict_team_score(self, features: List[float]) -> float:
         features = np.array(features).reshape(1, -1)
+        features_scaled = self.scaler.transform(features)
         return float(self.model.predict(features, verbose=0)[0][0])
 
 # ==========================================
